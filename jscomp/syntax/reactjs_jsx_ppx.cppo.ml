@@ -317,7 +317,7 @@ let makePropsValue fnName loc namedArgListWithKeyAndRef propsType =
   pval_name = {txt = propsName; loc};
   pval_type =
       recursivelyMakeNamedArgsForExternal
-        namedArgListWithKeyAndRef
+        (List.rev namedArgListWithKeyAndRef)
         (Typ.arrow
           nolabel
           {
@@ -362,6 +362,7 @@ let makeObjectField loc (str, _attrs, type_) =
 
 (* Build an AST node representing a "closed" Js.t object representing a component's props *)
 let makePropsType ~loc namedTypeList =
+  let namedTypeList = List.rev namedTypeList in
   Typ.mk ~loc (
     Ptyp_constr({txt= Ldot (Lident("Js"), "t"); loc}, [{
 #if OCAML_VERSION >= (4,3,0)
