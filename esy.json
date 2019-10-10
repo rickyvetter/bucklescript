@@ -2,10 +2,10 @@
   "name": "bs-platform",
   "version": "5.2.0-dev.2",
   "dependencies": {
-    "ocaml": "4.2.3004"
+    "ocaml": "4.2.3007"
   },
   "devDependencies": {
-    "ocaml": "4.2.3004"
+    "ocaml": "4.2.3007"
   },
   "scripts": {
     "clean": "node ./scripts/ninja.js clean"
