@@ -13,7 +13,6 @@
   "esy": {
     "buildsInSource": true,
     "build": [
-      ["git", "submodule", "update", "--init"],
       ["node", "scripts/buildocaml.js"],
       ["node", "./scripts/install.js"],
       ["cp", "-r", "-f", "#{self.root / 'bsconfig.json'}", "#{self.install}"],
