@@ -2,13 +2,10 @@
   "name": "bs-platform",
   "version": "5.2.0-dev.2",
   "dependencies": {
-    "ocaml": "4.02.3000+BS"
+    "ocaml": "4.02.3"
   },
   "devDependencies": {
-    "ocaml": "4.02.3000+BS"
-  },
-  "resolutions": {
-    "ocaml": "bucklescript/ocaml:package.json#698e60f3cd2f442f2013e79860ce2f7b0a9624cb"
+    "ocaml": "4.02.3"
   },
   "scripts": {
     "clean": "node ./scripts/ninja.js clean"
@@ -16,6 +13,8 @@
   "esy": {
     "buildsInSource": true,
     "build": [
+      ["git", "submodule", "update", "--init"],
+      ["node", "scripts/buildocaml.js"],
       ["node", "./scripts/install.js"],
       ["cp", "-r", "-f", "#{self.root / 'bsconfig.json'}", "#{self.install}"],
       ["cp", "-r", "-f", "#{self.root / 'esy.json'}", "#{self.install}"],
