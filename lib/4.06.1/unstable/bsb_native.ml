@@ -12956,7 +12956,7 @@ let make_custom_rules
     );
     if has_ppx then 
       Buffer.add_string buf " $ppx_flags"; 
-    Buffer.add_string buf " $bsc_flags -o $out -bs-syntax-only -bs-binary-ast $in";   
+    Buffer.add_string buf " -o $out $bsc_flags -bs-syntax-only -bs-binary-ast $in";   
     Buffer.contents buf
   in  
   let build_ast =
