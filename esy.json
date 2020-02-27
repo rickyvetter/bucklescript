@@ -25,9 +25,10 @@
       ["cp", "-r", "-f", "#{self.root / 'lib'}", "#{self.install}"],
       ["cp", "-r", "-f", "#{self.root / 'scripts'}", "#{self.install}"],
       ["cp", "-r", "-f", "#{self.root / 'vendor'}", "#{self.install}"],
-      ["cp", "-f", "#{self.root / 'bsb'}", "#{self.install}"],
-      ["cp", "-f", "#{self.root / 'bsc'}", "#{self.install}"],
-      ["cp", "-f", "#{self.root / 'bsrefmt'}", "#{self.install}"]
+      ["cp", "-f", "#{self.root / 'bsb'}", "#{self.bin}"],
+      ["cp", "-f", "#{self.root / 'bsc'}", "#{self.bin}"],
+      ["cp", "-f", "#{self.root / 'bsrefmt'}", "#{self.bin}"]
+      ["cp", "-f", "#{self.root / 'lib/bstracing'}", "#{self.bin}"]
     ],
     "buildDev": [
       ["echo", "config"],
