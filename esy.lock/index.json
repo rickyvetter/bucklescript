@@ -1,5 +1,5 @@
 {
-  "checksum": "a0f4fa67bcb1beac6cda121fffdda6bb",
+  "checksum": "a0e4ebc4cf38a5a32bdbfc1127b3c336",
   "root": "bs-platform@link-dev:./esy.json",
   "node": {
     "ocaml@github:bucklescript/ocaml:package.json#698e60f3cd2f442f2013e79860ce2f7b0a9624cb@d41d8cd9": {
