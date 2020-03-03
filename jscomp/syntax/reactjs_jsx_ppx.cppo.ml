@@ -694,7 +694,11 @@ let jsxMapper () =
           (* let make = (~prop) => ... *)
           | {
             pexp_desc = Pexp_fun (label, default, pattern, internalExpression)
-          } -> ((fun a -> a), false, unerasableIgnoreExp  expression)
+          } ->
+            let pleaseDeleteMeTempHackPattern = match pattern with
+            | {ppat_desc = Ppat_constraint(pat, _)} -> pat
+            | pat -> pat in 
+            ((fun a -> a), false, unerasableIgnoreExp  {expression with pexp_desc = Pexp_fun (label, default, pleaseDeleteMeTempHackPattern, internalExpression)})
           (* let make = {let foo = bar in (~prop) => ...} *)
           | {
               pexp_desc = Pexp_let (recursive, vbs, internalExpression)

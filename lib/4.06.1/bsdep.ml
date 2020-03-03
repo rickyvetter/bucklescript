@@ -47999,7 +47999,11 @@ let jsxMapper () =
           (* let make = (~prop) => ... *)
           | {
             pexp_desc = Pexp_fun (label, default, pattern, internalExpression)
-          } -> ((fun a -> a), false, unerasableIgnoreExp  expression)
+          } ->
+            let pleaseDeleteMeTempHackPattern = match pattern with
+            | {ppat_desc = Ppat_constraint(pat, _)} -> pat
+            | pat -> pat in 
+            ((fun a -> a), false, unerasableIgnoreExp  {expression with pexp_desc = Pexp_fun (label, default, pleaseDeleteMeTempHackPattern, internalExpression)})
           (* let make = {let foo = bar in (~prop) => ...} *)
           | {
               pexp_desc = Pexp_let (recursive, vbs, internalExpression)
@@ -48198,11 +48202,11 @@ let jsxMapper () =
         | {loc; txt = Ldot (modulePath, ("createElement" | "make"))} ->
           (match !jsxVersion with
           
-# 896 "syntax/reactjs_jsx_ppx.cppo.ml"
+# 900 "syntax/reactjs_jsx_ppx.cppo.ml"
           | None
           | Some 2 -> transformUppercaseCall modulePath mapper loc attrs callExpression callArguments
           
-# 902 "syntax/reactjs_jsx_ppx.cppo.ml"
+# 906 "syntax/reactjs_jsx_ppx.cppo.ml"
           | Some 3 -> transformUppercaseCall3 modulePath mapper loc attrs callExpression callArguments
           | Some _ -> raise (Invalid_argument "JSX: the JSX version must be 2 or 3"))
 
@@ -48212,11 +48216,11 @@ let jsxMapper () =
         | {loc; txt = Lident id} ->
           (match !jsxVersion with
           
-# 911 "syntax/reactjs_jsx_ppx.cppo.ml"
+# 915 "syntax/reactjs_jsx_ppx.cppo.ml"
           | None
           | Some 2 -> transformLowercaseCall mapper loc attrs callArguments id
           
-# 917 "syntax/reactjs_jsx_ppx.cppo.ml"
+# 921 "syntax/reactjs_jsx_ppx.cppo.ml"
           | Some 3 -> transformLowercaseCall3 mapper loc attrs callArguments id
           | Some _ -> raise (Invalid_argument "JSX: the JSX version must be 2 or 3"))
 
@@ -49071,7 +49075,11 @@ let jsxMapper () =
           (* let make = (~prop) => ... *)
           | {
             pexp_desc = Pexp_fun (label, default, pattern, internalExpression)
-          } -> ((fun a -> a), false, unerasableIgnoreExp  expression)
+          } ->
+            let pleaseDeleteMeTempHackPattern = match pattern with
+            | {ppat_desc = Ppat_constraint(pat, _)} -> pat
+            | pat -> pat in 
+            ((fun a -> a), false, unerasableIgnoreExp  {expression with pexp_desc = Pexp_fun (label, default, pleaseDeleteMeTempHackPattern, internalExpression)})
           (* let make = {let foo = bar in (~prop) => ...} *)
           | {
               pexp_desc = Pexp_let (recursive, vbs, internalExpression)
@@ -49270,11 +49278,11 @@ let jsxMapper () =
         | {loc; txt = Ldot (modulePath, ("createElement" | "make"))} ->
           (match !jsxVersion with
           
-# 899 "syntax/reactjs_jsx_ppx.cppo.ml"
+# 903 "syntax/reactjs_jsx_ppx.cppo.ml"
           | Some 2 -> transformUppercaseCall modulePath mapper loc attrs callExpression callArguments
           | None
           
-# 902 "syntax/reactjs_jsx_ppx.cppo.ml"
+# 906 "syntax/reactjs_jsx_ppx.cppo.ml"
           | Some 3 -> transformUppercaseCall3 modulePath mapper loc attrs callExpression callArguments
           | Some _ -> raise (Invalid_argument "JSX: the JSX version must be 2 or 3"))
 
@@ -49284,11 +49292,11 @@ let jsxMapper () =
         | {loc; txt = Lident id} ->
           (match !jsxVersion with
           
-# 914 "syntax/reactjs_jsx_ppx.cppo.ml"
+# 918 "syntax/reactjs_jsx_ppx.cppo.ml"
           | Some 2 -> transformLowercaseCall mapper loc attrs callArguments id
           | None
           
-# 917 "syntax/reactjs_jsx_ppx.cppo.ml"
+# 921 "syntax/reactjs_jsx_ppx.cppo.ml"
           | Some 3 -> transformLowercaseCall3 mapper loc attrs callArguments id
           | Some _ -> raise (Invalid_argument "JSX: the JSX version must be 2 or 3"))
 
