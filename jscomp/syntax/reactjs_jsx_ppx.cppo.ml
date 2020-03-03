@@ -682,7 +682,10 @@ let jsxMapper () =
             pexp_desc = Pexp_fun ((Labelled(_) | Optional(_) as label), default, pattern, ({pexp_desc = Pexp_fun _} as internalExpression))
           } ->
             let (wrap, hasUnit, exp) = spelunkForFunExpression internalExpression in
-            (wrap, hasUnit, unerasableIgnoreExp {expression with pexp_desc = Pexp_fun (label, default, pattern, exp)})
+            let pleaseDeleteMeTempHackPattern = match pattern with
+            | {ppat_desc = Ppat_constraint(pat, _)} -> pat
+            | pat -> pat in 
+            (wrap, hasUnit, unerasableIgnoreExp {expression with pexp_desc = Pexp_fun (label, default, pleaseDeleteMeTempHackPattern, exp)})
           (* let make = (()) => ... *)
           (* let make = (_) => ... *)
           | {
