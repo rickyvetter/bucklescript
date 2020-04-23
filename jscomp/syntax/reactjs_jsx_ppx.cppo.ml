@@ -657,6 +657,9 @@ let jsxMapper () =
       let fileName = filenameFromLoc pstr_loc in
       let emptyLoc = Location.in_file fileName in
       let mapBinding binding = if (hasAttrOnBinding binding) then
+        let bindingLoc = binding.pvb_loc in
+        let bindingPatLoc = binding.pvb_pat.ppat_loc in
+        let binding = { binding with pvb_pat = { binding.pvb_pat with ppat_loc = emptyLoc}; pvb_loc = emptyLoc} in
         let fnName = getFnName binding in
         let internalFnName = fnName ^ "$Internal" in
         let fullModuleName = makeModuleName fileName !nestedModules fnName in
@@ -798,16 +801,14 @@ let jsxMapper () =
             ppat_attributes = [];
           }
           innerExpressionWithRef in
-        let fullExpression = match (fullModuleName) with
-        | ("") -> fullExpression
-        | (txt) -> Exp.let_
-            Nonrecursive
-            [Vb.mk
-              ~loc:emptyLoc
-              (Pat.var ~loc:emptyLoc {loc = emptyLoc; txt})
-              fullExpression
-            ]
-            (Exp.ident ~loc:emptyLoc {loc = emptyLoc; txt = Lident txt}) in
+        let fullExpression = Exp.let_
+          Nonrecursive
+          [Vb.mk
+            ~loc:bindingLoc
+            (Pat.var ~loc:bindingPatLoc {loc = emptyLoc; txt = fullModuleName})
+            fullExpression
+          ]
+          (Exp.ident ~loc:emptyLoc {loc = emptyLoc; txt = Lident fullModuleName}) in
         let (bindings, newBinding) =
           match recFlag with
           | Recursive -> ([bindingWrapper (Exp.let_
